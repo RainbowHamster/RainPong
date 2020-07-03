@@ -65,7 +65,7 @@ void ballBehavior(struct Game *game, struct Object *ball)
   for(int i = 0; game->objects[i] != NULL; i++)
   {
     if(game->objects[i] != ball)
-      if(isCollide(ball, game->objects[i]))
+      if(isColliding(ball, game->objects[i]))
       {
         ball->speed.x *= -1;
         Mix_PlayChannel(-1, pongSound, 0);
@@ -73,20 +73,23 @@ void ballBehavior(struct Game *game, struct Object *ball)
   }
 }
 
-void isCollide(struct Object* dynam, struct Object* stat)
+void isColliding(struct Object* dynamicObject, struct Object* staticObject)
 {
-  int dl = dynam->pos.x;
-  int dt = dynam->pos.y;
-  int db = dt + dynam->size.h;
-  int dr = dl + dynam->size.w;
+  int dynamicObjectLeftEdge   = dynamicObject->pos.x;
+  int dynamicObjectTopEdge    = dynamicObject->pos.y;
+  int dynamicObjectBottomEdge = dynamicObjectTopEdge + dynamicObject->size.h;
+  int dynamicObjectRightEdge  = dynamicObjectLeftEdge + dynamicObject->size.w;
 
-  int sl = stat->pos.x;
-  int st = stat->pos.y;
-  int sb = st + stat->size.h;
-  int sr = sl + stat->size.w;
+  int staticObjectLeftEdge    = staticObject->pos.x;
+  int staticObjectTopEdge     = staticObject->pos.y;
+  int staticObjectBottomEdge  = staticObjectTopEdge + staticObject->size.h;
+  int staticObjectRightEdge   = staticObjectLeftEdge + staticObject->size.w;
 
-  int ycoll = dt <= sb & db >= st;
-  if (ycoll && (dl <= sr & dr >= sl))
+  int yCollision = dynamicObjectTopEdge <= staticObjectBottomEdge &&
+                   dynamicObjectBottomEdge >= staticObjectTopEdge;
+
+  if (yCollision & (dynamicObjectLeftEdge <= staticObjectRightEdge &&
+                    dynamicObjectRightEdge >= staticObjectLeftEdge))
     return 1;
   return 0;
 }
