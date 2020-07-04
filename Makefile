@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-g
+CFLAGS=-pg
 LDFLAGS=-lSDL2 -lSDL2_mixer
 
 

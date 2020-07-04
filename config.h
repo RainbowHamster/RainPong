@@ -17,8 +17,8 @@
 #define BALL_STATE_FLY          0
 #define BALL_STATE_LEFT         1
 #define BALL_STATE_RIGHT        -1
-#define BACKGROUND_MUSIC_PATH   "/home/rh/workdir/pong2/resources/bgsound.wav"
-#define PONG_SOUND_PATH         "/home/rh/workdir/pong2/resources/pong.wav"
+#define BACKGROUND_MUSIC_PATH   "./resources/bgsound.wav"
+#define PONG_SOUND_PATH         "./resources/pong.wav"
 
 extern const struct Color BG_COLOR;
 extern const struct Color PLAYER_COLOR;
